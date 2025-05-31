@@ -722,7 +722,7 @@ return {
 			Input.Value:set(value .. string.sub(Input._input.Text, #oldPrefix + 1), true)
 		end
 		_K.client.settings.prefix:hook(updatePrefix)
-		_K.client.settings.playerPrefix:hook(updatePrefix)
+		_K.client.settings.clientSettings:hook(updatePrefix)
 
 		TooltipFrame.MouseWheelForward:Connect(suggestionUp)
 		TooltipFrame.MouseWheelBackward:Connect(suggestionDown)

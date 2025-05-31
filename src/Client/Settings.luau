@@ -17,6 +17,7 @@ function Settings.new(_K)
 
 	local settingsDialog
 	local pendingChanges = {}
+	local clientSettings = _K.client.settings.clientSettings
 
 	local function resetChanges()
 		table.clear(pendingChanges)
@@ -130,8 +131,8 @@ function Settings.new(_K)
 					Placeholder = ";",
 					MaxChars = 1,
 					Value = UI.compute(function(use)
-						return use(_K.client.settings.playerPrefix)[_K.LocalPlayer.UserId]
-							or use(_K.client.settings.prefix)[1]
+						return use(clientSettings)["playerPrefix"][_K.LocalPlayer.UserId]
+							or use(clientSettings)["playerPrefix"][1]
 					end),
 					Validate = function(text)
 						return not (text == "" or table.find(reservedPrefixes, text))
@@ -140,8 +141,8 @@ function Settings.new(_K)
 					[UI.Hook] = {
 						Selected = function(value)
 							_K.Data.settings.playerPrefix[_K.LocalPlayer.UserId] = value
-							_K.client.settings.playerPrefix:set(_K.Data.settings.playerPrefix, true)
-							_K.Remote.PlayerPrefix:FireServer(value)
+							clientSettings.playerPrefix:set(_K.Data.settings.playerPrefix, true)
+							_K.Remote.clientSettings:FireServer(value)
 						end,
 					},
 				},

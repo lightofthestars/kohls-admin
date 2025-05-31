@@ -110,7 +110,7 @@ function _K.getCommandPrefix(from: number?)
 	if not from and _K.IsClient then
 		from = Util.Service.Players.LocalPlayer.UserId
 	end
-	return _K.Data.settings.playerPrefix[from]
+	return _K.Data.settings.clientSettings.playerPrefix[from]
 		or (if type(_K.Data.settings.prefix) == "table" then _K.Data.settings.prefix[1] else _K.Data.settings.prefix)
 end
 
@@ -583,8 +583,8 @@ function _K.initialize(config: Configuration | ModuleScript | { [string]: any },
 	end)
 
 	-- handle custom command prefix
-	_K.Remote.PlayerPrefix.OnServerEvent:Connect(function(player, prefix)
-		_K.Data.settings.playerPrefix[player.UserId] = prefix
+	_K.Remote.clientSettings.OnServerEvent:Connect(function(player, setting, value)
+		_K.Data.settings.clientSettings[setting][player.UserId] = value
 	end)
 
 	-- handle changing of settings

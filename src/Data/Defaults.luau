@@ -59,7 +59,11 @@ local Data = {
 		notifications = {},
 
 		announcement = false,
-		playerPrefix = {},
+		clientSettings = {
+			playerPrefix = { [1] = ";" },
+			commandbarHotkey = {},
+			dashboardHotkey = {},
+		},
 	},
 
 	async = {
