@@ -118,6 +118,15 @@ function Settings.new(_K)
 					Value = UI.UserInputService:GetStringForKeyCode(_K.client.hotkeys.dashboard.key._value),
 					Hotkey = _K.client.hotkeys.dashboard.key,
 					Modifiers = _K.client.hotkeys.dashboard.mods,
+
+					[UI.Hook] = {
+						Selected = function(value)
+							_K.Data.settings.clientSettings.dashboardHotkey[_K.LocalPlayer.UserId] =
+								_K.client.hotkeys.dashboard
+							clientSettings.dashboardHotkey:set(_K.Data.settings.clientSetings.dashboardHotkey, true)
+							_K.Remote.clientSettings:FireServer("dashboardHotkey", _K.client.hotkeys.dashboard)
+						end,
+					},
 				},
 			},
 			UI.new "ListItem" {
@@ -140,9 +149,9 @@ function Settings.new(_K)
 
 					[UI.Hook] = {
 						Selected = function(value)
-							_K.Data.settings.playerPrefix[_K.LocalPlayer.UserId] = value
-							clientSettings.playerPrefix:set(_K.Data.settings.playerPrefix, true)
-							_K.Remote.clientSettings:FireServer(value)
+							_K.Data.settings.clientSettings.playerPrefix[_K.LocalPlayer.UserId] = value
+							clientSettings.playerPrefix:set(_K.Data.settings.clientSettings.playerPrefix, true)
+							_K.Remote.clientSettings:FireServer("playerPrefix", value)
 						end,
 					},
 				},
